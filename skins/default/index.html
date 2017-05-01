@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+		<title>Prayer Times | Hunter MSA</title>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<meta name="application-name" content="Prayer Times | Hunter MSA"/>
+		<meta name="description" content="Default skin for Hunter College MSA's Prayer Times display.'"/>
+		<meta name="author" content="أخ"/>
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css" />
+	</head>
+    <body>
+        <!-- Prayer times. -->
+		<div id="prayerTimes" class="row">
+			<div class="col-lg-12">
+				<table class="table table-bordered table-responsive">
+					<thead class="thead-default">
+						<tr>
+						<!--<th>Imsak</th>-->
+							<th>Fajr</th>
+							<th>Sunrise</th>
+							<th>Dhuhr</th>
+							<th>Asr</th>
+							<th>Maghrib</th>
+							<th>Isha</th>
+						<!--<th>Midnight</th>-->
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td id="fajr"></td>
+							<td id="sunrise"></td>
+							<td id="dhuhr"></td>
+							<td id="asr"></td>
+							<td id="maghrib"></td>
+							<td id="isha"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+		<!-- Fliers. -->
+		<div id="fliers" class="row"></div>
+
+		<!-- Announcements. -->
+		<div id="announcements" class="row">
+			<div class="col-lg-12">
+				<p id="announcement"></p>
+			</div>
+		</div>
+
+        <!-- PrayTimes-related scripts. -->
+        <script type="text/javascript" src="../../js/PrayTimes.js"></script>
+        <script type="text/javascript" src="../../js/PrayTimesCustomization.js"></script>
+		<script type="text/javascript" src="../../js/PrayTimesDisplay.js"></script>
+		<script type="text/javascript" src="../../js/Fliers.js"></script>
+		<script type="text/javascript" src="js/jquery-3.2.1.slim.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+    </body>
+</html>
