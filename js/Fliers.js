@@ -1,6 +1,6 @@
 'use strict';
 
-const FLIER_COUNT = 4;
+var FLIER_COUNT = 4;
 
  /**
   * FROM: http://stackoverflow.com/a/14731922
