@@ -22,26 +22,34 @@ asrElement.innerHTML     = times.asr;
 maghribElement.innerHTML = times.maghrib;
 ishaElement.innerHTML    = times.isha;
 
-async function highlightPrayer(nowHour, nowMinute) {
+function highlightPrayer(nowHour, nowMinute) {
+    unhighlightPrayers();
     var highlightStyle = 'color: #F3E76D; text-shadow: 0 0 2px #F3E76D, 0 0 10px #F3E76D';
-
-    if (nowHour == fajrRaw.hour && nowMinute == fajrRaw.minute) {
+    var now = nowHour + (nowMinute / 60.0);
+    if (_times.fajr <= now && now < _times.sunrise) {
         fajrTableHead.setAttribute('style', highlightStyle);
-    } else if (nowHour == sunriseRaw.hour && nowMinute == sunriseRaw.minute) {
+    } else if (_times.sunrise <= now && now < _times.dhuhr) {
         sunriseTableHead.setAttribute('style', highlightStyle);
-    } else if (nowHour == dhuhrRaw.hour && nowMinute == dhuhrRaw.minute) {
+    } else if (_times.dhuhr <= now && now < _times.asr) {
         dhuhrTableHead.setAttribute('style', highlightStyle);
-    } else if (nowHour == asrRaw.hour && nowMinute == asrRaw.minute) {
+    } else if (_times.asr <= now && now < _times.maghrib) {
         asrTableHead.setAttribute('style', highlightStyle);
-    } else if (nowHour == maghribRaw.hour && nowMinute == maghribRaw.minute) {
+    } else if (_times.maghrib <= now && now < _times.isha) {
         maghribTableHead.setAttribute('style', highlightStyle);
-    } else if (nowHour == ishaRaw.hour && nowMinute == ishaRaw.minute) {
+    } else if (_times.isha <= now) {
         ishaTableHead.setAttribute('style', highlightStyle);
     } else {
-        // We choose sunrise as the default because usually the screen and browser
-        // will startup in the morning, after sunrise but before dhuhr.
-        sunriseTableHead.setAttribute('style', highlightStyle);
+        ishaTableHead.setAttribute('style', highlightStyle);
     }
+}
+
+function unhighlightPrayers() {
+    fajrTableHead.removeAttribute('style');
+    sunriseTableHead.removeAttribute('style');
+    dhuhrTableHead.removeAttribute('style');
+    asrTableHead.removeAttribute('style');
+    maghribTableHead.removeAttribute('style');
+    ishaTableHead.removeAttribute('style');
 }
 
 // Check for a highlight update every minute.
