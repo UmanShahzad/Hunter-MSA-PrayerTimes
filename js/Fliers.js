@@ -41,7 +41,7 @@ document.getElementById('fliers').innerHTML = '';
 for (var i = 1; i <= FLIER_COUNT; ++i) {
     document.getElementById('fliers').innerHTML += `
         <div class="col-lg-3">
-            <img id="flier${i}" src="../../../${i}.jpg" />
+            <img id="flier${i}" src="../../fliers/${i}.jpg" />
         </div>
     `;
 }
