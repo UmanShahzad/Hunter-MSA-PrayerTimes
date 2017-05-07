@@ -1,0 +1,23 @@
+{
+  "name": "msa-hunter-prayertimes",
+  "version": "1.0.0",
+  "description": "The raspberry pi driven prayer times display at Hunter MSA.",
+  "main": "index.html",
+  "dependencies": {
+    "local-web-server": "^1.2.7"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/UmanShahzad/Hunter-MSA-PrayerTimes.git"
+  },
+  "author": "أخ",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/UmanShahzad/Hunter-MSA-PrayerTimes/issues"
+  },
+  "homepage": "https://github.com/UmanShahzad/Hunter-MSA-PrayerTimes#readme"
+}
