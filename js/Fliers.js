@@ -1,9 +1,19 @@
 'use strict';
 
-var dropbox = new Dropbox({ accessToken: 'WONT_WORK_UNTIL_YOU_FILL_THIS' });
+var dropbox;
+readTextFile('http://127.0.0.1:1337/../../apikey', function (request) {
+    dropbox = new Dropbox({
+        accessToken: request.responseText.replace(/(\r\n|\n|\r)/gm, '')
+    });
+    getDropboxEntries('/fliers');
+    getDropboxEntries('/announcements');
+});
+
 var FLIER_COUNT;
 var fliers = document.getElementById('fliers');
+var announcement = document.getElementById('announcement');
 fliers.innerHTML = '';
+announcement.innerHTML = '';
 
  /**
   * FROM: http://stackoverflow.com/a/14731922
@@ -39,56 +49,91 @@ function adjustFlierSizeById(id) {
     ).height;
 }
 
-function getDropboxEntries() {
-    dropbox.filesListFolder({ path: ''})
-        .then(function(response) {
-            console.log(response);
+function getDropboxEntries(dropbox_path) {
+    dropbox.filesListFolder({ 
+        path: dropbox_path
+    }).then(function(response) {
+        console.log(response);
+        if (dropbox_path == '/fliers') {
             FLIER_COUNT = response.entries.length;
-            createSharedFilesLink(response.entries);
-        })
-        .catch(function(error) {
-            console.log(error);
-        });
+        }
+        createSharedFilesLink(dropbox_path, response.entries);
+    }).catch(function(error) {
+        console.log(error);
+    });
 }
 
-function createSharedFilesLink(files) {
-    for (var i = 0; i < files.length; ++i) {
-        const id = 'flier' + i;
-        var flierUrl;
-        dropbox.sharingCreateSharedLink({
-            path: files[i].path_display,
-            pending_upload: { '.tag': 'file' } 
-        })
-            .then(function(response) {
+function createSharedFilesLink(path, files) {
+    if (path == '/fliers') {
+        for (var i = 0; i < files.length; ++i) {
+            const id = 'flier' + i;
+            dropbox.sharingCreateSharedLink({
+                path: files[i].path_display,
+                pending_upload: { '.tag': 'file' } 
+            }).then(function(response) {
                 console.log(response);
                 displayFlier(response.url, id);
-            })
-            .catch(function(error) {
+            }).catch(function(error) {
                 console.log(error);
             });
+        }
+    } else {
+        dropbox.sharingCreateSharedLink({
+            path: files[0].path_display,
+            pending_upload: { '.tag': 'file' } 
+        }).then(function(response) {
+            console.log(response);
+            displayAnnouncement(response.url);
+        }).catch(function(error) {
+            console.log(error);
+        });
     }
 }
 
 function displayFlier(flierUrl, id) {
-    dropbox.sharingGetSharedLinkFile({ url: flierUrl })
-        .then(function(data) {
-            console.log(data);
+    dropbox.sharingGetSharedLinkFile({
+        url: flierUrl
+    }).then(function(data) {
+        console.log(data);
 
-            var flier_div = document.createElement('div');
-            flier_div.setAttribute('class', 'col-lg-1');
-            fliers.appendChild(flier_div);
-            
-            var flier = document.createElement('img');
-            flier.setAttribute('id', id);
-            flier.setAttribute('src', URL.createObjectURL(data.fileBlob));
-            flier_div.appendChild(flier);
-        })
-        .catch(function(error) {
-            console.log(error);
-        });
+        var flier_div = document.createElement('div');
+        flier_div.setAttribute('class', 'col-lg-1');
+        fliers.appendChild(flier_div);
+        
+        var flier = document.createElement('img');
+        flier.setAttribute('id', id);
+        flier.setAttribute('src', URL.createObjectURL(data.fileBlob));
+        flier_div.appendChild(flier);
+    }).catch(function(error) {
+        console.log(error);
+    });
 }
 
-getDropboxEntries();
+function displayAnnouncement(announcementUrl) {
+    dropbox.sharingGetSharedLinkFile({
+        url: announcementUrl
+    }).then(function(data) {
+        console.log(data)
+        readTextFile(URL.createObjectURL(data.fileBlob), function (request) {
+            announcement.innerText = request.responseText;
+        });
+    }).catch(function(error) {
+        console.log(error);
+    });
+}
+
+function readTextFile(file, callback) {
+    var rawFile = new XMLHttpRequest();
+    rawFile.open("GET", file, true);
+    rawFile.onreadystatechange = function () {
+        if (rawFile.readyState === 4) {
+            if (rawFile.status === 200 || rawFile.status == 0) {
+                callback(rawFile);
+            }
+        }
+    }
+    rawFile.send(null);
+}
 
 setTimeout(function () {
     for (var i = 0; i < FLIER_COUNT; ++i) {
