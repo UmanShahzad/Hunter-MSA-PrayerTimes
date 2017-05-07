@@ -1,6 +1,9 @@
 'use strict';
 
-var FLIER_COUNT = 4;
+var dropbox = new Dropbox({ accessToken: 'WONT_WORK_UNTIL_YOU_FILL_THIS' });
+var FLIER_COUNT;
+var fliers = document.getElementById('fliers');
+fliers.innerHTML = '';
 
  /**
   * FROM: http://stackoverflow.com/a/14731922
@@ -26,36 +29,106 @@ function adjustFlierSizeById(id) {
     var flier = document.getElementById(id);
 
     flier.width = calculateAspectRatioFit(
-        flier.naturalWidth, flier.naturalHeight,
+        flier.width, flier.height,
         (window.innerWidth / FLIER_COUNT) - FLIER_COUNT*10, window.innerHeight
     ).width;
 
     flier.height = calculateAspectRatioFit(
-        flier.naturalWidth, flier.naturalHeight,
+        flier.width, flier.height,
         (window.innerWidth / FLIER_COUNT) - FLIER_COUNT*10, window.innerHeight
     ).height;
 }
 
-
-document.getElementById('fliers').innerHTML = '';
-for (var i = 1; i <= FLIER_COUNT; ++i) {
-    document.getElementById('fliers').innerHTML += `
-        <div class="col-lg-3">
-            <img id="flier${i}" src="../../fliers/${i}.jpg" />
-        </div>
-    `;
+function getDropboxEntries() {
+    dropbox.filesListFolder({ path: ''})
+        .then(function(response) {
+            console.log(response);
+            FLIER_COUNT = response.entries.length;
+            createSharedFilesLink(response.entries);
+        })
+        .catch(function(error) {
+            console.log(error);
+        });
 }
 
+function createSharedFilesLink(files) {
+    for (var i = 0; i < files.length; ++i) {
+        const id = 'flier' + i;
+        var flierUrl;
+        dropbox.sharingCreateSharedLink({
+            path: files[i].path_display,
+            pending_upload: { '.tag': 'file' } 
+        })
+            .then(function(response) {
+                console.log(response);
+                displayFlier(response.url, id);
+            })
+            .catch(function(error) {
+                console.log(error);
+            });
+    }
+}
+
+function displayFlier(flierUrl, id) {
+    dropbox.sharingGetSharedLinkFile({ url: flierUrl })
+        .then(function(data) {
+            console.log(data);
+
+            var flier_div = document.createElement('div');
+            flier_div.setAttribute('class', 'col-lg-1');
+            fliers.appendChild(flier_div);
+            
+            var flier = document.createElement('img');
+            flier.setAttribute('id', id);
+            flier.setAttribute('src', URL.createObjectURL(data.fileBlob));
+            flier_div.appendChild(flier);
+        })
+        .catch(function(error) {
+            console.log(error);
+        });
+}
+
+getDropboxEntries();
 
 setTimeout(function () {
-    adjustFlierSizeById('flier1');
-    adjustFlierSizeById('flier2');
-    adjustFlierSizeById('flier3');
-    adjustFlierSizeById('flier4');
-}, 1);
+    for (var i = 0; i < FLIER_COUNT; ++i) {
+        adjustFlierSizeById('flier' + i);
+    }
+
+    $(document).ready(function() {
+        $('#fliers').slick({
+            autoplay: true,
+            autoplaySpeed: 3000,
+            pauseOnHover: false,
+            speed: 2000,
+            arrows: false,
+            centerMode: false,
+            centerPadding: '60px',
+            slidesToShow: 3,
+            responsive: [ {
+                breakpoint: 768,
+                settings: {
+                    arrows: false,
+                    centerMode: true,
+                    centerPadding: '40px',
+                    slidesToShow: 3
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    arrows: false,
+                    centerMode: true,
+                    centerPadding: '40px',
+                    slidesToShow: 1
+                }
+            }]
+        });
+    });
+}, 3000);
 
 window.onresize = function() {
-    for (var i = 1; i <= FLIER_COUNT; ++i) {
-        adjustFlierSizeById(i);
+    for (var i = 0; i < FLIER_COUNT; ++i) {
+        adjustFlierSizeById('flier' + i);
     }
 }
