@@ -19,12 +19,12 @@
 					<thead class="">
 						<tr>
 						<!--<th>Imsak</th>-->
-							<th>Fajr</th>
-							<th>Sunrise</th>
-							<th>Dhuhr</th>
-							<th>Asr</th>
-							<th>Maghrib</th>
-							<th>Isha</th>
+							<th id="fajr-th">Fajr</th>
+							<th id="sunrise-th">Sunrise</th>
+							<th id="dhuhr-th">Dhuhr</th>
+							<th id="asr-th">Asr</th>
+							<th id="maghrib-th">Maghrib</th>
+							<th id="isha-th">Isha</th>
 						<!--<th>Midnight</th>-->
 						</tr>
 					</thead>
@@ -55,31 +55,18 @@
 
 		<!-- Announcements. -->
 		<div id="announcements" class="row">
-			<div class="col-lg-12">
-				<p id="announcement"></p>
-			</div>
+			<!-- 540 characters max on 1080p 1920x1080 -->
+			<p id="announcement"></p>
 		</div>
 
         <!-- PrayTimes-related scripts. -->
+		<script type="text/javascript" src="js/jquery-3.2.1.slim.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/Dropbox.min.js"></script>
+		<script type="text/javascript" src="js/slick.min.js"></script>
         <script type="text/javascript" src="../../js/PrayTimes.js"></script>
         <script type="text/javascript" src="../../js/PrayTimesCustomization.js"></script>
 		<script type="text/javascript" src="../../js/PrayTimesDisplay.js"></script>
 		<script type="text/javascript" src="../../js/Fliers.js"></script>
-		<script type="text/javascript" src="js/jquery-3.2.1.slim.min.js"></script>
-		<script type="text/javascript" src="js/bootstrap.min.js"></script>
-		<script type="text/javascript" src="js/slick.min.js"></script>
-
-		<script type="text/javascript">
-			$(document).ready(function() {
-				$('#fliers').slick({
-					slidesToShow: 2,
-					slidesToScroll: 1,
-					autoplay: true,
-					autoplaySpeed: 3000,
-					speed: 1000,
-					arrows: false,
-				});
-			});
-		</script>
     </body>
 </html>

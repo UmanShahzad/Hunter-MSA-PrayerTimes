@@ -14,12 +14,13 @@ body {
 }
 
 img {
-    border-radius: 25px 50px 25px 50px;
-    margin: 50px 0px 0px 20px;
+    border-radius: 10px;
+    margin: 120px 0px 0px 20px;
 }
 
 #announcement_intro img {
     position: absolute;
+    margin: 50px 0px 0px 20px;
 }
 
 #announcement_intro p {
@@ -31,6 +32,19 @@ img {
     margin: 80px 0px 0px 30px;
 }
 
+#announcements p {
+    position: absolute;
+    text-align: left;
+    text-shadow: 0 1px 0 #38678f;
+    font-size: 2vmin;
+    color: #FFFFFF;
+    margin: 155px 250px 0px 45px;
+}
+
+#fliers {
+    margin: 0px 0px 0px 100px
+}
+
 table {
     background-color: #19767C;
     width: 100%;
@@ -39,7 +53,7 @@ table {
 }
 
 thead {
-        margin: 50px 0px;
+    margin: 50px 0px;
 }
 
 th {
@@ -62,5 +76,3 @@ td {
     color: #FFFFFF;
     transition: all 0.2s;
 }
-
-
