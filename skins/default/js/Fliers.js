@@ -170,7 +170,7 @@ setTimeout(function () {
             }]
         });
     });
-}, 3000);
+}, 30000);
 
 window.onresize = function() {
     for (var i = 0; i < FLIER_COUNT; ++i) {
