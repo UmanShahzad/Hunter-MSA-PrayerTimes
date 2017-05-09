@@ -40,12 +40,12 @@ function adjustFlierSizeById(id) {
 
     flier.width = calculateAspectRatioFit(
         flier.naturalWidth, flier.naturalHeight,
-        (screen.width / 3), screen.height - 400
+        screen.width, screen.height - 400
     ).width;
 
     flier.height = calculateAspectRatioFit(
         flier.naturalWidth, flier.naturalHeight,
-        (screen.width / 3), screen.height - 400
+        screen.width, screen.height - 400
     ).height;
 }
 
@@ -96,17 +96,17 @@ function displayFlier(flierUrl, id) {
     }).then(function(data) {
         console.log(data);
 
-        var flier_div = document.createElement('div');
-        flier_div.setAttribute('class', 'col-lg-1');
-        flier_div.setAttribute('style', 'height: 700px;');
-        fliers.appendChild(flier_div);
+        //var flier_div = document.createElement('div');
+        //flier_div.setAttribute('class', 'col-lg-1');
+        //flier_div.setAttribute('style', 'width: 100%; height: 700px;');
+        //fliers.appendChild(flier_div);
         
         var flier = document.createElement('img');
         flier.setAttribute('id', id);
         flier.setAttribute('src', URL.createObjectURL(data.fileBlob));
-        flier.setAttribute('style', 'display: block; margin: auto;');
-        flier_div.appendChild(flier);
-        //fliers.appendChild(flier);
+        flier.setAttribute('style', 'margin: 0px 30px 0px 0px;');
+        //flier_div.appendChild(flier);
+        fliers.appendChild(flier);
     }).catch(function(error) {
         console.log(error);
     });
@@ -146,31 +146,15 @@ setTimeout(function () {
     $(document).ready(function() {
         $('#fliers').slick({
             autoplay: true,
-            autoplaySpeed: 3000,
+            autoplaySpeed: 0,
             pauseOnHover: false,
-            speed: 2000,
+            speed: 5000,
             arrows: false,
-            centerMode: false,
+            centerMode: true,
             centerPadding: '60px',
-            slidesToShow: 1,
-            responsive: [ {
-                breakpoint: 768,
-                settings: {
-                    arrows: false,
-                    centerMode: true,
-                    centerPadding: '40px',
-                    slidesToShow: 1
-                }
-            },
-            {
-                breakpoint: 480,
-                settings: {
-                    arrows: false,
-                    centerMode: true,
-                    centerPadding: '40px',
-                    slidesToShow: 1
-                }
-            }]
+            infinite: true,
+            slidesToShow: 3,
+            variableWidth: true
         });
     });
 }, 30000);
