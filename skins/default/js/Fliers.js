@@ -39,13 +39,13 @@ function adjustFlierSizeById(id) {
     var flier = document.getElementById(id);
 
     flier.width = calculateAspectRatioFit(
-        flier.width, flier.height,
-        (window.innerWidth / FLIER_COUNT) - FLIER_COUNT*10, window.innerHeight
+        flier.naturalWidth, flier.naturalHeight,
+        (screen.width / 3), screen.height - 400
     ).width;
 
     flier.height = calculateAspectRatioFit(
-        flier.width, flier.height,
-        (window.innerWidth / FLIER_COUNT) - FLIER_COUNT*10, window.innerHeight
+        flier.naturalWidth, flier.naturalHeight,
+        (screen.width / 3), screen.height - 400
     ).height;
 }
 
@@ -98,12 +98,15 @@ function displayFlier(flierUrl, id) {
 
         var flier_div = document.createElement('div');
         flier_div.setAttribute('class', 'col-lg-1');
+        flier_div.setAttribute('style', 'height: 700px;');
         fliers.appendChild(flier_div);
         
         var flier = document.createElement('img');
         flier.setAttribute('id', id);
         flier.setAttribute('src', URL.createObjectURL(data.fileBlob));
+        flier.setAttribute('style', 'display: block; margin: auto;');
         flier_div.appendChild(flier);
+        //fliers.appendChild(flier);
     }).catch(function(error) {
         console.log(error);
     });
@@ -149,14 +152,14 @@ setTimeout(function () {
             arrows: false,
             centerMode: false,
             centerPadding: '60px',
-            slidesToShow: 3,
+            slidesToShow: 2,
             responsive: [ {
                 breakpoint: 768,
                 settings: {
                     arrows: false,
                     centerMode: true,
                     centerPadding: '40px',
-                    slidesToShow: 3
+                    slidesToShow: 2
                 }
             },
             {
