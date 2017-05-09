@@ -19,25 +19,25 @@ img {
 
 #announcement_intro img {
     position: absolute;
-    margin: 0px 0px 0px 20px;
+    margin: 0px 0px 50px 20px;
 }
 
 #announcement_intro p {
     position: absolute;
     text-align: center;
     text-shadow: 0 1px 0 #38678f;
-    font-size: 4vmin;
+    font-size: 5vmin;
     color: #FFFFFF;
-    margin: 30px 0px 0px 30px;
+    margin: 30px 0px 50px 30px;
 }
 
 #announcements p {
     position: absolute;
     text-align: left;
     text-shadow: 0 1px 0 #38678f;
-    font-size: 2.5vmin;
+    font-size: 4vmin;
     color: #FFFFFF;
-    margin: 105px 250px 0px 45px;
+    margin: 105px 250px 50px 45px;
 }
 
 #fliers {
