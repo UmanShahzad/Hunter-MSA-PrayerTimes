@@ -9,7 +9,7 @@ readTextFile('http://127.0.0.1:8000/apikey', function (request) {
     getDropboxEntries('/announcements');
 });
 
-var SECONDS_UNTIL_ADJUSTMENTS = 10;
+var SECONDS_UNTIL_ADJUSTMENTS = 30;
 var CAROUSEL_ELEMENT_COUNT;
 var carousel = document.getElementById('carousel');
 var text_content = document.getElementById('text-content');

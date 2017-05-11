@@ -5,7 +5,6 @@
 
 body {
     background: #22A5AD;
-    color: white;
     margin: 0px;
     padding: 0px;
     max-width: 100%;
@@ -36,7 +35,6 @@ th {
 }
 
 td {
-    width: 16%;
     height: 100%;
     padding: 10px;
     text-align: center;
@@ -53,22 +51,22 @@ td {
     white-space: nowrap;
 }
 
+#text {
+
+}
+
 #text-header {
     position: absolute;
-    text-align: center;
-    text-shadow: 0 1px 0 #38678f;
-    font-size: 5vmin;
+    font-size: 3vw;
     color: #FFFFFF;
     margin: -40px 0px 0px 30px;
 }
 
 #text-content {
     position: absolute;
-    text-align: left;
-    text-shadow: 0 1px 0 #38678f;
-    font-size: 4vmin;
+    font-size: 2vw;
     color: #FFFFFF;
-    margin: 30px 250px 0px 30px;
+    margin: 30px 350px 0px 30px;
 }
 
 #msa-logo {
