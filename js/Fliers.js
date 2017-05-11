@@ -1,7 +1,7 @@
 'use strict';
 
 var dropbox;
-readTextFile('http://127.0.0.1:8000/../../apikey', function (request) {
+readTextFile('http://127.0.0.1:8000/apikey', function (request) {
     dropbox = new Dropbox({
         accessToken: request.responseText.replace(/(\r\n|\n|\r)/gm, '')
     });
