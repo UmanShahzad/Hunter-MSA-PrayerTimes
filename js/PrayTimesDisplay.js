@@ -17,7 +17,6 @@ var ishaTableHead    = document.getElementById('isha-th');
 //var midnightElement = document.getElementById('midnight');
 //var midnightTableHead = document.getElementById('midnight-th');
 var currentTimeContent = document.getElementById('current-time-content');
-var currentTimeHeader = document.getElementById('current-time-header');
 
 /* Sets the prayer times text. */
 //ismakElement.innerHTML = times.ismak;
