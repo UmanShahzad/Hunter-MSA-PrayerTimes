@@ -9,6 +9,7 @@ readTextFile('http://127.0.0.1:8000/../../apikey', function (request) {
     getDropboxEntries('/announcements');
 });
 
+var SECONDS_UNTIL_IMAGE_ADJUSTMENTS = 10;
 var FLIER_COUNT;
 var fliers = document.getElementById('fliers');
 var announcement = document.getElementById('announcement');
@@ -157,7 +158,7 @@ setTimeout(function () {
             variableWidth: true
         });
     });
-}, 30000);
+}, SECONDS_UNTIL_IMAGE_ADJUSTMENTS*1000);
 
 window.onresize = function() {
     for (var i = 0; i < FLIER_COUNT; ++i) {

@@ -2,6 +2,8 @@
 
 const MILLIS_IN_MINUTE = 1000*60;
 
+//var ismakElement   = document.getElementById('ismak');
+//var ismakTableHead = document.getElementById('ismak-th');
 var fajrElement      = document.getElementById('fajr');
 var fajrTableHead    = document.getElementById('fajr-th');
 var sunriseElement   = document.getElementById('sunrise');
@@ -14,13 +16,18 @@ var maghribElement   = document.getElementById('maghrib');
 var maghribTableHead = document.getElementById('maghrib-th');
 var ishaElement      = document.getElementById('isha');
 var ishaTableHead    = document.getElementById('isha-th');
+//var midnightElement = document.getElementById('midnight');
+//var midnightTableHead = document.getElementById('midnight-th');
 
+/* Sets the prayer times text. */
+//ismakElement.innerHTML = times.ismak;
 fajrElement.innerHTML    = times.fajr;
 sunriseElement.innerHTML = times.sunrise;
 dhuhrElement.innerHTML   = times.dhuhr;
 asrElement.innerHTML     = times.asr;
 maghribElement.innerHTML = times.maghrib;
 ishaElement.innerHTML    = times.isha;
+//midnightElement.innerHTML = times.midnight;
 
 function highlightPrayer(nowHour, nowMinute) {
     unhighlightPrayers();
@@ -36,8 +43,6 @@ function highlightPrayer(nowHour, nowMinute) {
         asrTableHead.setAttribute('style', highlightStyle);
     } else if (_times.maghrib <= now && now < _times.isha) {
         maghribTableHead.setAttribute('style', highlightStyle);
-    } else if (_times.isha <= now) {
-        ishaTableHead.setAttribute('style', highlightStyle);
     } else {
         ishaTableHead.setAttribute('style', highlightStyle);
     }
