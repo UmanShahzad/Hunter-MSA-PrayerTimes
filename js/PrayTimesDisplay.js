@@ -1,7 +1,5 @@
 'use strict';
 
-const MILLIS_IN_MINUTE = 1000*60;
-
 //var ismakElement   = document.getElementById('ismak');
 //var ismakTableHead = document.getElementById('ismak-th');
 var fajrElement      = document.getElementById('fajr');
@@ -18,6 +16,8 @@ var ishaElement      = document.getElementById('isha');
 var ishaTableHead    = document.getElementById('isha-th');
 //var midnightElement = document.getElementById('midnight');
 //var midnightTableHead = document.getElementById('midnight-th');
+var currentTimeContent = document.getElementById('current-time-content');
+var currentTimeHeader = document.getElementById('current-time-header');
 
 /* Sets the prayer times text. */
 //ismakElement.innerHTML = times.ismak;
@@ -29,19 +29,18 @@ maghribElement.innerHTML = times.maghrib;
 ishaElement.innerHTML    = times.isha;
 //midnightElement.innerHTML = times.midnight;
 
-function highlightPrayer(nowHour, nowMinute) {
-    unhighlightPrayers();
+function highlightPrayer(hour, minute) {
     var highlightStyle = 'color: #F3E76D; text-shadow: 0 0 2px #F3E76D, 0 0 10px #F3E76D';
-    var now = nowHour + (nowMinute / 60.0);
-    if (_times.fajr <= now && now < _times.sunrise) {
+    var time = hour + (minute / 60.0);
+    if (_times.fajr <= time && time < _times.sunrise) {
         fajrTableHead.setAttribute('style', highlightStyle);
-    } else if (_times.sunrise <= now && now < _times.dhuhr) {
+    } else if (_times.sunrise <= time && time < _times.dhuhr) {
         sunriseTableHead.setAttribute('style', highlightStyle);
-    } else if (_times.dhuhr <= now && now < _times.asr) {
+    } else if (_times.dhuhr <= time && time < _times.asr) {
         dhuhrTableHead.setAttribute('style', highlightStyle);
-    } else if (_times.asr <= now && now < _times.maghrib) {
+    } else if (_times.asr <= time && time < _times.maghrib) {
         asrTableHead.setAttribute('style', highlightStyle);
-    } else if (_times.maghrib <= now && now < _times.isha) {
+    } else if (_times.maghrib <= time && time < _times.isha) {
         maghribTableHead.setAttribute('style', highlightStyle);
     } else {
         ishaTableHead.setAttribute('style', highlightStyle);
@@ -57,8 +56,33 @@ function unhighlightPrayers() {
     ishaTableHead.removeAttribute('style');
 }
 
-// Check for a highlight update every minute.
-setInterval(function () {
+function zeroPadder(n) {
+    n = parseInt(n, 10);
+    return (n < 10)? "0" + n : n;
+}
+
+function getFormattedTime(time) {
+	var hh = time.getHours() % 12 || 12;
+	var mm = time.getMinutes();
+	var ss = time.getSeconds();
+	var period = (hh >= 12 ? "pm" : "am");
+    return hh + ":" + zeroPadder(mm) + " " + period;
+}
+
+function updateCurrentTimeDisplay(time) {
+    currentTimeContent.innerHTML = getFormattedTime(time);
+}
+
+function updatePrayerHighlight(time) {
+    unhighlightPrayers();
+    highlightPrayer(time.getHours(), time.getMinutes());
+}
+
+setInterval(function() {
     var now = new Date();
-    highlightPrayer(now.getHours(), now.getMinutes());
-}, MILLIS_IN_MINUTE);
+    updatePrayerHighlight(now)
+}, 1000*60);
+setInterval(function() {
+    var now = new Date();
+    updateCurrentTimeDisplay(now)
+}, 1000);
