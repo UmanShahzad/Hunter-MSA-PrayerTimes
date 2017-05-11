@@ -17,36 +17,6 @@ img {
     border-radius: 10px;
 }
 
-#announcement_intro img {
-    position: absolute;
-    margin: 0px 0px 50px 20px;
-}
-
-#announcement_intro p {
-    position: absolute;
-    text-align: center;
-    text-shadow: 0 1px 0 #38678f;
-    font-size: 5vmin;
-    color: #FFFFFF;
-    margin: 30px 0px 50px 30px;
-}
-
-#announcements p {
-    position: absolute;
-    text-align: left;
-    text-shadow: 0 1px 0 #38678f;
-    font-size: 4vmin;
-    color: #FFFFFF;
-    margin: 105px 250px 50px 45px;
-}
-
-#fliers {
-    height: 700px;
-    width: 100%;
-    margin: 50px 0px;
-    white-space: nowrap;
-}
-
 table {
     background-color: #19767C;
     width: 100%;
@@ -73,4 +43,34 @@ td {
     font-size: 3vmin;
     color: #FFFFFF;
     transition: all 0.2s;
+}
+
+#carousel {
+    height: 700px;
+    width: 100%;
+    margin: 50px 0px;
+    white-space: nowrap;
+}
+
+#text-header {
+    position: absolute;
+    text-align: center;
+    text-shadow: 0 1px 0 #38678f;
+    font-size: 5vmin;
+    color: #FFFFFF;
+    margin: 30px 0px 50px 30px;
+}
+
+#text-content {
+    position: absolute;
+    text-align: left;
+    text-shadow: 0 1px 0 #38678f;
+    font-size: 4vmin;
+    color: #FFFFFF;
+    margin: 105px 250px 50px 45px;
+}
+
+#msa-logo {
+    position: absolute;
+    margin: 0px 0px 50px 20px;
 }

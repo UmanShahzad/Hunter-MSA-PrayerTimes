@@ -9,12 +9,12 @@ readTextFile('http://127.0.0.1:8000/../../apikey', function (request) {
     getDropboxEntries('/announcements');
 });
 
-var SECONDS_UNTIL_IMAGE_ADJUSTMENTS = 10;
-var FLIER_COUNT;
-var fliers = document.getElementById('fliers');
-var announcement = document.getElementById('announcement');
-fliers.innerHTML = '';
-announcement.innerHTML = '';
+var SECONDS_UNTIL_ADJUSTMENTS = 10;
+var CAROUSEL_ELEMENT_COUNT;
+var carousel = document.getElementById('carousel');
+var text_content = document.getElementById('text-content');
+carousel.innerHTML = '';
+text_content.innerHTML = '';
 
  /**
   * FROM: http://stackoverflow.com/a/14731922
@@ -30,13 +30,13 @@ announcement.innerHTML = '';
 function calculateAspectRatioFit(srcWidth, srcHeight, maxWidth, maxHeight) {
     var ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
     return { width: srcWidth*ratio, height: srcHeight*ratio };
- }
+}
 
 /**
  * Adjust the size of a flier to look well on the screen.
  * @param {Number} id The id of the flier, ranging from 1 to 4, inclusive.
  */
-function adjustFlierSizeById(id) {
+function adjustCarouselElementSizeById(id) {
     var flier = document.getElementById(id);
 
     flier.width = calculateAspectRatioFit(
@@ -56,7 +56,7 @@ function getDropboxEntries(dropbox_path) {
     }).then(function(response) {
         console.log(response);
         if (dropbox_path == '/fliers') {
-            FLIER_COUNT = response.entries.length;
+            CAROUSEL_ELEMENT_COUNT = response.entries.length;
         }
         createSharedFilesLink(dropbox_path, response.entries);
     }).catch(function(error) {
@@ -67,13 +67,13 @@ function getDropboxEntries(dropbox_path) {
 function createSharedFilesLink(path, files) {
     if (path == '/fliers') {
         for (var i = 0; i < files.length; ++i) {
-            const id = 'flier' + i;
+            const id = 'carousel-' + i;
             dropbox.sharingCreateSharedLink({
                 path: files[i].path_display,
                 pending_upload: { '.tag': 'file' } 
             }).then(function(response) {
                 console.log(response);
-                displayFlier(response.url, id);
+                displayElementOnCarousel(response.url, id);
             }).catch(function(error) {
                 console.log(error);
             });
@@ -84,42 +84,35 @@ function createSharedFilesLink(path, files) {
             pending_upload: { '.tag': 'file' } 
         }).then(function(response) {
             console.log(response);
-            displayAnnouncement(response.url);
+            displayTextContent(response.url);
         }).catch(function(error) {
             console.log(error);
         });
     }
 }
 
-function displayFlier(flierUrl, id) {
+function displayElementOnCarousel(flierUrl, id) {
     dropbox.sharingGetSharedLinkFile({
         url: flierUrl
     }).then(function(data) {
         console.log(data);
-
-        //var flier_div = document.createElement('div');
-        //flier_div.setAttribute('class', 'col-lg-1');
-        //flier_div.setAttribute('style', 'width: 100%; height: 700px;');
-        //fliers.appendChild(flier_div);
-        
         var flier = document.createElement('img');
         flier.setAttribute('id', id);
         flier.setAttribute('src', URL.createObjectURL(data.fileBlob));
         flier.setAttribute('style', 'margin: 0px 30px 0px 0px;');
-        //flier_div.appendChild(flier);
-        fliers.appendChild(flier);
+        carousel.appendChild(flier);
     }).catch(function(error) {
         console.log(error);
     });
 }
 
-function displayAnnouncement(announcementUrl) {
+function displayTextContent(textFileUrl) {
     dropbox.sharingGetSharedLinkFile({
-        url: announcementUrl
+        url: textFileUrl
     }).then(function(data) {
         console.log(data)
         readTextFile(URL.createObjectURL(data.fileBlob), function (request) {
-            announcement.innerText = request.responseText;
+            text_content.innerText = request.responseText;
         });
     }).catch(function(error) {
         console.log(error);
@@ -127,25 +120,25 @@ function displayAnnouncement(announcementUrl) {
 }
 
 function readTextFile(file, callback) {
-    var rawFile = new XMLHttpRequest();
-    rawFile.open("GET", file, true);
-    rawFile.onreadystatechange = function () {
-        if (rawFile.readyState === 4) {
-            if (rawFile.status === 200 || rawFile.status == 0) {
-                callback(rawFile);
+    var request = new XMLHttpRequest();
+    request.open("GET", file, true);
+    request.onreadystatechange = function () {
+        if (request.readyState === 4) {
+            if (request.status === 200 || request.status == 0) {
+                callback(request);
             }
         }
     }
-    rawFile.send(null);
+    request.send(null);
 }
 
 setTimeout(function () {
-    for (var i = 0; i < FLIER_COUNT; ++i) {
-        adjustFlierSizeById('flier' + i);
+    for (var i = 0; i < CAROUSEL_ELEMENT_COUNT; ++i) {
+        adjustCarouselElementSizeById('carousel-' + i);
     }
 
     $(document).ready(function() {
-        $('#fliers').slick({
+        $('#carousel').slick({
             autoplay: true,
             autoplaySpeed: 0,
             pauseOnHover: false,
@@ -158,10 +151,10 @@ setTimeout(function () {
             variableWidth: true
         });
     });
-}, SECONDS_UNTIL_IMAGE_ADJUSTMENTS*1000);
+}, SECONDS_UNTIL_ADJUSTMENTS*1000);
 
 window.onresize = function() {
-    for (var i = 0; i < FLIER_COUNT; ++i) {
-        adjustFlierSizeById('flier' + i);
+    for (var i = 0; i < CAROUSEL_ELEMENT_COUNT; ++i) {
+        adjustCarouselElementSizeById('carousel-' + i);
     }
 }
