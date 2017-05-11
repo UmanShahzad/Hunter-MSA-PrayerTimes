@@ -20,6 +20,7 @@ img {
 table {
     background-color: #19767C;
     width: 100%;
+    margin: 0px 0px 0px 10px;
     border: none;
 }
 
@@ -41,6 +42,7 @@ td {
     background-color: #19767C;
     width: 15%;
     height: 127px;
+    margin: 0px 0px 0px 5px;
     color: #FFFFFF;
 }
 

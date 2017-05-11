@@ -77,11 +77,16 @@ function updatePrayerHighlight(time) {
     highlightPrayer(time.getHours(), time.getMinutes());
 }
 
-setInterval(function() {
+function interval(millis, callback) {
+    callback();
+    return setInterval(callback, millis);
+}
+
+interval(1000*60, function() {
     var now = new Date();
-    updatePrayerHighlight(now)
-}, 1000*60);
-setInterval(function() {
+    updatePrayerHighlight(now);
+});
+interval(1000, function() {
     var now = new Date();
-    updateCurrentTimeDisplay(now)
-}, 1000);
+    updateCurrentTimeDisplay(now);
+});
