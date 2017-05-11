@@ -5,8 +5,8 @@ readTextFile('http://127.0.0.1:8000/../../apikey', function (request) {
     dropbox = new Dropbox({
         accessToken: request.responseText.replace(/(\r\n|\n|\r)/gm, '')
     });
-    getDropboxEntries('/fliers');
-    getDropboxEntries('/announcements');
+    getDropboxEntries('/images');
+    getDropboxEntries('/texts');
 });
 
 var SECONDS_UNTIL_ADJUSTMENTS = 10;
@@ -55,7 +55,7 @@ function getDropboxEntries(dropbox_path) {
         path: dropbox_path
     }).then(function(response) {
         console.log(response);
-        if (dropbox_path == '/fliers') {
+        if (dropbox_path == '/images') {
             CAROUSEL_ELEMENT_COUNT = response.entries.length;
         }
         createSharedFilesLink(dropbox_path, response.entries);
@@ -65,7 +65,7 @@ function getDropboxEntries(dropbox_path) {
 }
 
 function createSharedFilesLink(path, files) {
-    if (path == '/fliers') {
+    if (path == '/images') {
         for (var i = 0; i < files.length; ++i) {
             const id = 'carousel-' + i;
             dropbox.sharingCreateSharedLink({
