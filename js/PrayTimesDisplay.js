@@ -64,7 +64,7 @@ function getFormattedTime(time) {
 	var hh = time.getHours() % 12 || 12;
 	var mm = time.getMinutes();
 	var ss = time.getSeconds();
-	var period = (hh >= 12 ? "pm" : "am");
+	var period = (time.getHours() >= 12 ? "pm" : "am");
     return hh + ":" + zeroPadder(mm) + " " + period;
 }
 
